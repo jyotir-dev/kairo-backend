@@ -115,11 +115,14 @@ exports.me = async (user) => {
     console.log(user)
     return {
         response: {
-            id: user._id,
-            username: user.username,
-            email: user.email,
-            emailVerified: user.emailVerified,
-            createdAt: user.createdAt
+            success: true,
+            user: {
+                id: user._id,
+                username: user.username,
+                email: user.email,
+                emailVerified: user.emailVerified,
+                createdAt: user.createdAt
+            }
         }
     };
 };
