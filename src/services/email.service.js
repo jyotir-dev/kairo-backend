@@ -28,6 +28,6 @@ exports.sendEmail = ({ to, subject, html }) => {
         html
     })
     .catch((error) => {
-        logger.error('EMAIL', `Failed to send "${subject}"`, error.message);
+        log.error('EMAIL', `Failed to send "${subject}"`, error.message);
     });
 };
