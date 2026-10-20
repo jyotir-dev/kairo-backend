@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 // Routes
 const authRoutes = require('./routes/auth.routes');
 const escrowRoutes = require('./routes/escrow.routes');
+const healthRoutes = require('./routes/health.routes');
 
 // Middlewares
 const errorMiddleware = require('./middlewares/error.middleware');
@@ -34,6 +35,9 @@ app.use(cors({
 
 // Logger Middleware
 app.use(loggerMiddleware);
+
+// Health Check
+app.use('/api/health', healthRoutes);
 
 // Routes
 app.use('/api/auth', authRoutes);
