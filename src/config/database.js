@@ -14,8 +14,8 @@ const CONNECTION_OPTIONS = {
 mongoose.set('strictQuery', true);
 
 // Connection Events
-mongoose.connection.on('disconnected', () => log.warn('DATABASE', 'yellow', 'Disconnected from MongoDB.'));
-mongoose.connection.on('reconnected', () => log.success('DATABASE', 'green', 'Reconnected to MongoDB.'));
+mongoose.connection.on('disconnected', () => log.warn('DATABASE', 'Disconnected from MongoDB.'));
+mongoose.connection.on('reconnected', () => log.success('DATABASE', 'Reconnected to MongoDB.'));
 
 // Connect Database
 module.exports = async () => {
