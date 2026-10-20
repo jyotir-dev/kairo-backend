@@ -1,5 +1,6 @@
 // Dependencies
 const cors = require('cors');
+const helmet = require('helmet');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 
@@ -20,6 +21,9 @@ const app = express();
 if (process.env.NODE_ENV === 'production') {
     app.set('trust proxy', 1);
 }
+
+// Security Headers
+app.use(helmet());
 
 // Express Middleware
 app.use(express.json({ limit: '10kb' }));
