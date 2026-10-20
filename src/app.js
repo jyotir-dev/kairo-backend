@@ -40,8 +40,8 @@ app.use(loggerMiddleware);
 app.use('/api/health', healthRoutes);
 
 // Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/escrow', escrowRoutes);
+app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/escrow', escrowRoutes);
 
 // Fallback Middleware
 app.use(fallbackMiddleware);
