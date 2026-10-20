@@ -36,7 +36,7 @@ app.use(cors({
 // Logger Middleware
 app.use(loggerMiddleware);
 
-// Health Check
+// Health
 app.use('/api/health', healthRoutes);
 
 // Routes
