@@ -24,9 +24,13 @@ const AMOUNT_MIN = 0.001;
 const AMOUNT_MAX = 1000;
 
 // Create Validation
-exports.create = ({ body, params, query }) => {
+exports.create = (params, body, query) => {
 
-    const { role, username, title, description, amount } = body;
+    const role = body.role;
+    const username = body.username;
+    const title = body.title;
+    const description = body.description;
+    const amount = body.amount;
 
     // Role
     if (!Object.values(ESCROW_ROLE).includes(role)) {
@@ -78,9 +82,9 @@ exports.create = ({ body, params, query }) => {
 };
 
 // Public ID Validation
-exports.publicID = ({ body, params, query }) => {
+exports.publicID = (params, body, query) => {
 
-    const { publicID } = params;
+    const publicID = params.publicID;
 
     // Public ID
     if (typeof publicID !== 'string' || !PUBLIC_ID_REGEX.test(publicID)) {
@@ -89,10 +93,10 @@ exports.publicID = ({ body, params, query }) => {
 };
 
 // Respond Validation
-exports.respond = ({ body, params, query }) => {
+exports.respond = (params, body, query) => {
 
-    const { action } = body;
-    const { publicID } = params;
+    const action = body.action;
+    const publicID = params.publicID;
 
     // Public ID
     if (typeof publicID !== 'string' || !PUBLIC_ID_REGEX.test(publicID)) {
@@ -106,9 +110,9 @@ exports.respond = ({ body, params, query }) => {
 };
 
 // Release Validation
-exports.release = ({ body, params, query }) => {
+exports.release = (params, body, query) => {
 
-    const { publicID } = params;
+    const publicID = params.publicID;
 
     // Public ID
     if (typeof publicID !== 'string' || !PUBLIC_ID_REGEX.test(publicID)) {
@@ -117,10 +121,10 @@ exports.release = ({ body, params, query }) => {
 };
 
 // Withdraw Validation
-exports.withdraw = ({ body, params, query }) => {
+exports.withdraw = (params, body, query) => {
 
-    const { address } = body;
-    const { publicID } = params;
+    const address = body.address;
+    const publicID = params.publicID;
 
     // Public ID
     if (typeof publicID !== 'string' || !PUBLIC_ID_REGEX.test(publicID)) {

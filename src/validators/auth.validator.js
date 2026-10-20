@@ -14,9 +14,11 @@ const PASSWORD_MIN = 8;
 const PASSWORD_MAX = 72;
 
 // Signup Validation
-exports.signup = ({ body, params, query }) => {
+exports.signup = (params, body, query) => {
 
-    const { username, email, password } = body;
+    const username = body.username;
+    const email = body.email;
+    const password = body.password;
 
     // Username
     if (typeof username !== 'string' || !username.trim()) {
@@ -51,9 +53,10 @@ exports.signup = ({ body, params, query }) => {
 };
 
 // Login Validation
-exports.login = ({ body, params, query }) => {
+exports.login = (params, body, query) => {
 
-    const { username, password } = body;
+    const username = body.username;
+    const password = body.password;
 
     // Username
     if (typeof username !== 'string' || !username.trim()) {
@@ -75,9 +78,10 @@ exports.login = ({ body, params, query }) => {
 };
 
 // Change Password Validation
-exports.changePassword = ({ body, params, query }) => {
+exports.changePassword = (params, body, query) => {
 
-    const { currentPassword, newPassword } = body;
+    const currentPassword = body.currentPassword;
+    const newPassword = body.newPassword;
 
     // Current Password
     if (typeof currentPassword !== 'string' || !currentPassword) {
@@ -99,9 +103,9 @@ exports.changePassword = ({ body, params, query }) => {
 };
 
 // Verify Email Validation
-exports.verifyEmail = ({ body, params, query }) => {
+exports.verifyEmail = (params, body, query) => {
 
-    const { token } = body;
+    const token = body.token;
 
     // Token
     if (typeof token !== 'string' || !TOKEN_REGEX.test(token)) {
@@ -110,9 +114,9 @@ exports.verifyEmail = ({ body, params, query }) => {
 };
 
 // Forgot Password Validation
-exports.forgotPassword = ({ body, params, query }) => {
+exports.forgotPassword = (params, body, query) => {
 
-    const { email } = body;
+    const email = body.email;
 
     // Email
     if (typeof email !== 'string' || !email.trim()) {
@@ -125,9 +129,10 @@ exports.forgotPassword = ({ body, params, query }) => {
 };
 
 // Reset Password Validation
-exports.resetPassword = ({ body, params, query }) => {
+exports.resetPassword = (params, body, query) => {
 
-    const { token, password } = body;
+    const token = body.token;
+    const password = body.password;
 
     // Token
     if (typeof token !== 'string' || !TOKEN_REGEX.test(token)) {
