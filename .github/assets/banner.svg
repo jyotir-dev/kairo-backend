@@ -30,7 +30,9 @@
 <filter id="lift" x="-5%" y="-30%" width="110%" height="160%"><feDropShadow dx="0" dy="0.6" stdDeviation="1.4" flood-color="#1e1b4b" flood-opacity="0.55"/></filter>
 <filter id="glow" x="-20%" y="-20%" width="140%" height="160%"><feDropShadow dx="0" dy="16" stdDeviation="22" flood-color="#1e1b4b" flood-opacity="0.32"/></filter>
 <clipPath id="railclip"><rect x="662.00" y="232.00" width="523.20" height="4" rx="2"/></clipPath>
+<clipPath id="frame"><rect width="1600" height="624" rx="28" ry="28"/></clipPath>
 </defs>
+<g clip-path="url(#frame)">
 <rect width="1600" height="624" fill="#2a1d6b"/>
 <use href="#aurora"/>
 <g clip-path="url(#panes)" opacity="0.85"><use href="#aurora" filter="url(#frost)"/></g>
@@ -628,6 +630,7 @@
 <path transform="translate(1306.15 494.00) scale(0.01953 -0.01953)" d="M771 -24C1147 -24 1422 233 1422 596V776H815V567H1161C1159 356 997 213 777 213C509 213 338 422 338 744C338 1067 508 1277 775 1277C966 1277 1106 1164 1143 996H1412C1369 1304 1101 1514 768 1514C368 1514 72 1212 72 744C72 288 358 -24 771 -24Z"/>
 <path transform="translate(1334.31 494.00) scale(0.01953 -0.01953)" d="M774 -24C1110 -24 1366 184 1416 509H1148C1106 320 966 213 776 213C502 213 338 424 338 744C338 1066 503 1277 776 1277C967 1277 1107 1169 1147 979H1416C1366 1305 1110 1514 774 1514C363 1514 72 1212 72 744C72 279 363 -24 774 -24Z"/>
 <path transform="translate(1362.09 494.00) scale(0.01953 -0.01953)" d="M124 0H384V760C384 860 379 1015 376 1162C428 1001 478 847 509 760L795 0H1011L1295 760C1327 851 1378 1015 1431 1183C1427 1030 1422 865 1422 760V0H1682V1490H1300L1015 707C988 624 940 475 905 359C870 475 822 624 794 707L504 1490H124Z"/></g>
+</g>
 <style>
 .b{transform-box:fill-box;transform-origin:center}
 .b1{animation:m1 10s ease-in-out infinite}.b2{animation:m2 9s ease-in-out infinite}
