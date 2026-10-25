@@ -332,3 +332,27 @@ exports.resetPassword = async (body) => {
         }
     };
 };
+
+// Verify Reset Token
+exports.verifyResetToken = async (body) => {
+
+    const token = body.token;
+
+    const tokenHash = Token.hash(token);
+
+    const user = await User.findOne({
+        passwordResetTokenHash: tokenHash,
+        passwordResetExpires: { $gt: new Date() }
+    });
+
+    if (!user) {
+        throw new BadRequestError('Invalid or expired reset link.', 'INVALID_RESET_TOKEN');
+    }
+
+    return {
+        response: {
+            success: true,
+            valid: true
+        }
+    };
+};

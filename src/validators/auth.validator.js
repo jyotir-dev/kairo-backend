@@ -148,3 +148,14 @@ exports.resetPassword = (params, body, query) => {
         throw new BadRequestError(`New password must be between ${PASSWORD_MIN} and ${PASSWORD_MAX} characters.`);
     }
 };
+
+// Verify Reset Token Validation
+exports.verifyResetToken = (params, body, query) => {
+
+    const token = body.token;
+
+    // Token
+    if (typeof token !== 'string' || !TOKEN_REGEX.test(token)) {
+        throw new BadRequestError('Invalid or expired reset link.', 'INVALID_RESET_TOKEN');
+    }
+};

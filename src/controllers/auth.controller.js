@@ -65,3 +65,9 @@ exports.resetPassword = catchAsync(async (req, res) => {
     authCookie.clearAuthCookie(res);
     res.status(200).json(result.response);
 });
+
+// Verify Reset Token
+exports.verifyResetToken = catchAsync(async (req, res) => {
+    const result = await authService.verifyResetToken(req.body);
+    res.status(200).json(result.response);
+});

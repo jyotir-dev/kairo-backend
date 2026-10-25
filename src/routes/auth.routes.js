@@ -80,5 +80,12 @@ router.post(
     authController.resetPassword
 );
 
+router.post(
+    '/reset-password/verify',
+    limitRequests(authLimits.token),
+    validateRequest(authValidator.verifyResetToken),
+    authController.verifyResetToken
+);
+
 // Export Router
 module.exports = router;
