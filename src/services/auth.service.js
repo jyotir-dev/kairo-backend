@@ -24,6 +24,9 @@ const BCRYPT_ROUNDS = 12;
 const RESET_TOKEN_TTL = 60 * 60 * 1000;
 const VERIFICATION_TOKEN_TTL = 24 * 60 * 60 * 1000;
 
+// Dummy Hash
+const DUMMY_HASH = bcrypt.hashSync('kairo-dummy-password', BCRYPT_ROUNDS);
+
 // Signup
 exports.signup = async (body) => {
 
@@ -81,12 +84,11 @@ exports.login = async (body) => {
     const password = body.password;
 
     const user = await User.findOne({ username }).select('+passwordHash');
+    const passwordMatch = await bcrypt.compare(password, user ? user.passwordHash : DUMMY_HASH);
 
     if (!user) {
         throw new UnauthorizedError('Invalid username or password.', 'INVALID_CREDENTIALS');
     }
-
-    const passwordMatch = await bcrypt.compare(password, user.passwordHash);
 
     if (!passwordMatch) {
         throw new UnauthorizedError('Invalid username or password.', 'INVALID_CREDENTIALS');
