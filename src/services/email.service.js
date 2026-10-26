@@ -19,13 +19,14 @@ const transporter = nodemailer.createTransport({
 });
 
 // Send Email
-exports.sendEmail = ({ to, subject, html }) => {
+exports.sendEmail = ({ to, subject, html, text }) => {
 
     transporter.sendMail({
         from: process.env.EMAIL_FROM,
         to,
         subject,
-        html
+        html,
+        text
     })
     .catch((error) => {
         log.error('EMAIL', `Failed to send "${subject}"`, error.message);
