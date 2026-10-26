@@ -13,7 +13,7 @@ exports.sendVerificationEmail = (user, rawToken) => {
 
     emailService.sendEmail({
         to: user.email,
-        ...verificationEmail({ verificationURL })
+        ...verificationEmail({ user, verificationURL })
     });
 };
 
@@ -24,7 +24,7 @@ exports.sendResetEmail = (user, rawToken) => {
 
     emailService.sendEmail({
         to: user.email,
-        ...resetEmail({ resetURL })
+        ...resetEmail({ user, resetURL })
     });
 };
 
@@ -35,6 +35,6 @@ exports.sendSecurityEmail = (user) => {
 
     emailService.sendEmail({
         to: user.email,
-        ...securityEmail({ secureAccountURL })
+        ...securityEmail({ user, secureAccountURL })
     });
 };
