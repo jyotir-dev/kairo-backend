@@ -23,6 +23,20 @@ module.exports = ({ user, verificationURL }) => {
         badge: '#18152d'
     };
 
+    // Escapes values from users and links before they go into the HTML.
+    const escape = (value) => String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+
+    const safe = {
+        username: escape(user.username),
+        email: escape(user.email),
+        url: escape(verificationURL)
+    };
+
     // Solid fill that's also drawn as a gradient: the Gmail app's dark mode recolors plain colors but leaves gradients alone.
     const paint = (hex) => `background-color: ${hex}; background-image: linear-gradient(${hex}, ${hex});`;
 
@@ -90,9 +104,8 @@ Didn't create a Kairo account? You can safely ignore this email.
 
 Kairo · Secure peer-to-peer escrow on Solana
 This email was sent to ${user.email}. Kairo will never ask for your password by email.`,
-        html: `
-<!DOCTYPE html>
-<html lang="en">
+        html: `<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -101,7 +114,13 @@ This email was sent to ${user.email}. Kairo will never ask for your password by 
     <meta name="color-scheme" content="dark">
     <meta name="supported-color-schemes" content="dark">
     <title></title>
+    <!--[if mso]><noscript><xml><o:OfficeDocumentSettings><o:AllowPNG/><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript><![endif]-->
     <style>
+        /* Client resets */
+        body { margin: 0 !important; padding: 0 !important; width: 100% !important; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        a[x-apple-data-detectors], #MessageViewBody a { color: inherit !important; text-decoration: none !important; font-size: inherit !important; font-family: inherit !important; font-weight: inherit !important; line-height: inherit !important; }
+
         /* Gmail app dark mode turns white text dark but leaves gradients alone; these wrappers keep the wordmark white there and do nothing elsewhere */
         u + .body .blend-screen { background: #000000; mix-blend-mode: screen; }
         u + .body .blend-difference { background: #000000; mix-blend-mode: difference; }
@@ -118,7 +137,7 @@ This email was sent to ${user.email}. Kairo will never ask for your password by 
         }
     </style>
 </head>
-<body class="body" style="margin: 0; padding: 0; background-color: ${color.page}; -webkit-font-smoothing: antialiased; -webkit-text-size-adjust: 100%;">
+<body class="body" style="margin: 0; padding: 0; background-color: ${color.page}; -webkit-font-smoothing: antialiased; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;">
 
     <div role="article" aria-roledescription="email" aria-label="Verify your Kairo account" lang="en">
 
@@ -161,17 +180,17 @@ This email was sent to ${user.email}. Kairo will never ask for your password by 
                                                                 <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse: separate !important; border-spacing: 0;">
                                                                     <tr>
                                                                         <td align="center" valign="middle" width="78" height="78" bgcolor="#16132a" style="text-align: center !important; vertical-align: middle !important; width: 78px; height: 78px; border-radius: 24px; border: 1px solid #7c3aed; border-top-color: #a78bfa; border-left-color: #8b5cf6; border-right-color: #6d28d9; border-bottom-color: #5b4bd8; background-color: #16132a; background-image: linear-gradient(180deg, #221d40 0%, #0f0d1a 100%); box-shadow: 0 22px 48px -8px rgba(109, 40, 217, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.16);">
-                                                        <!--[if mso]><span style="font-family: 'Segoe UI Symbol', 'Segoe UI', sans-serif; font-size: 20px; line-height: 24px; color: #e0e7ff;">&#9993;</span><![endif]-->
-                                                        <!--[if !mso]><!-->
-                                                        <!-- Envelope: light box with a dark box inside, flap drawn on the dark box -->
-                                                        <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center" style="margin: 0 auto; border-collapse: separate !important; border-spacing: 0;">
-                                                            <tr>
-                                                                <td style="padding: 2px; border-radius: 6px; font-size: 0; line-height: 0; ${paint(color.icon)}">
-                                                                    <div class="icon" style="width: 26px; height: 18px; border-radius: 4px; background-color: ${color.badge}; background-image: ${icon.image}, linear-gradient(${color.badge}, ${color.badge}); background-size: ${icon.size}, 100% 100%; background-position: ${icon.position}, 0 0; background-repeat: no-repeat;"></div>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                        <!--<![endif]-->
+                                                                            <!--[if mso]><span style="font-family: 'Segoe UI Symbol', 'Segoe UI', sans-serif; font-size: 20px; line-height: 24px; color: #e0e7ff;">&#9993;</span><![endif]-->
+                                                                            <!--[if !mso]><!-->
+                                                                            <!-- Envelope: light box with a dark box inside, flap drawn on the dark box -->
+                                                                            <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center" style="margin: 0 auto; border-collapse: separate !important; border-spacing: 0;">
+                                                                                <tr>
+                                                                                    <td style="padding: 2px; border-radius: 6px; font-size: 0; line-height: 0; ${paint(color.icon)}">
+                                                                                        <div class="icon" style="width: 26px; height: 18px; border-radius: 4px; background-color: ${color.badge}; background-image: ${icon.image}, linear-gradient(${color.badge}, ${color.badge}); background-size: ${icon.size}, 100% 100%; background-position: ${icon.position}, 0 0; background-repeat: no-repeat;"></div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                            <!--<![endif]-->
                                                                         </td>
                                                                     </tr>
                                                                 </table>
@@ -207,7 +226,7 @@ This email was sent to ${user.email}. Kairo will never ask for your password by 
                                             <!-- Text -->
                                             <tr>
                                                 <td class="text" align="center" style="text-align: center !important; padding-bottom: 30px; font-family: ${font}; font-size: 15px; line-height: 24px; color: ${color.text};">
-                                                    <span style="color: ${color.headline};">Hi ${user.username},</span> welcome to Kairo. Confirm your email to finish setting up your account and start your first escrow.
+                                                    <span style="color: ${color.headline};">Hi ${safe.username},</span> welcome to Kairo. Confirm your email to finish setting up your account and start your first escrow.
                                                 </td>
                                             </tr>
 
@@ -217,7 +236,7 @@ This email was sent to ${user.email}. Kairo will never ask for your password by 
                                                     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: separate !important; border-spacing: 0;">
                                                         <tr>
                                                             <td bgcolor="#ffffff" align="center" style="text-align: center !important; border-radius: 10px; box-shadow: 0 8px 24px -10px rgba(196, 181, 253, 0.45); mso-padding-alt: 15px 24px;">
-                                                                <a href="${verificationURL}" target="_blank" style="display: block; padding: 15px 24px; mso-padding-alt: 0; font-family: ${font}; font-size: 15px; line-height: 20px; font-weight: 600; color: #0b0a10; text-align: center; text-decoration: none; border-radius: 10px;">
+                                                                <a href="${safe.url}" target="_blank" style="display: block; padding: 15px 24px; mso-padding-alt: 0; font-family: ${font}; font-size: 15px; line-height: 20px; font-weight: 600; color: #0b0a10; text-align: center; text-decoration: none; border-radius: 10px;">
                                                                     Verify email address
                                                                 </a>
                                                             </td>
@@ -246,7 +265,7 @@ This email was sent to ${user.email}. Kairo will never ask for your password by 
                                             <tr>
                                                 <td align="center" style="text-align: center !important; padding-bottom: 26px; font-family: ${font}; font-size: 12px; line-height: 19px; color: ${color.muted};">
                                                     Button not working? Paste this link into your browser:<br>
-                                                    <a href="${verificationURL}" target="_blank" style="color: ${color.link}; text-decoration: none; word-break: break-all;">${verificationURL}</a>
+                                                    <a href="${safe.url}" target="_blank" style="color: ${color.link}; text-decoration: none; word-break: break-all;">${safe.url}</a>
                                                 </td>
                                             </tr>
 
@@ -277,7 +296,7 @@ This email was sent to ${user.email}. Kairo will never ask for your password by 
                                 <tr>
                                     <td align="center" style="text-align: center !important; font-family: ${font}; font-size: 12px; line-height: 19px; color: ${color.footer};">
                                         Secure peer-to-peer escrow on Solana<br>
-                                        This email was sent to <span style="color: ${color.muted};">${user.email}</span>.<br>
+                                        This email was sent to <span style="color: ${color.muted};">${safe.email}</span>.<br>
                                         Kairo will never ask for your password by email.
                                     </td>
                                 </tr>
