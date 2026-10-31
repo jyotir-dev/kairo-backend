@@ -12,7 +12,7 @@ const healthRoutes = require('./routes/health.routes');
 // Middlewares
 const logRequest = require('./middlewares/logger.middleware');
 const handleError = require('./middlewares/error.middleware');
-const handleNotFound = require('./middlewares/fallback.middleware');
+const handleNotFound = require('./middlewares/notfound.middleware');
 
 // Express App
 const app = express();
