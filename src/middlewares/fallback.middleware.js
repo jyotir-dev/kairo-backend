@@ -1,5 +1,5 @@
 // Errors
-const { NotFoundError } = require('../errors/http.errors')
+const { NotFoundError } = require('../errors/http.errors');
 
 // Handle Not Found
 function handleNotFound() {

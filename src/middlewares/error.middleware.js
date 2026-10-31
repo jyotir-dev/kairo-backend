@@ -1,3 +1,4 @@
+// Errors
 const ApiError = require('../errors/api.error');
 
 // Handle Error
