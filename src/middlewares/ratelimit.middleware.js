@@ -9,7 +9,7 @@ const handler = (req, res, next, options) => {
     next(new TooManyRequestsError(options.message));
 };
 
-// Limit Requests
+// Rate Limit Requests
 module.exports = ({ windowMs, limit, message, skipSuccessfulRequests = false }) => {
     return rateLimit({
         windowMs,

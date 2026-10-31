@@ -15,13 +15,13 @@ const escrowController = require('../controllers/escrow.controller');
 
 // Middlewares
 const requireAuth = require('../middlewares/auth.middleware');
-const limitRequests = require('../middlewares/limiter.middleware');
+const rateLimit = require('../middlewares/ratelimit.middleware');
 const validateRequest = require('../middlewares/validate.middleware');
 
 // Escrow Routes
 router.post(
     '/create', 
-    limitRequests(escrowLimits.create),
+    rateLimit(escrowLimits.create),
     requireAuth,
     validateRequest(escrowValidator.create), 
     escrowController.create
@@ -41,7 +41,7 @@ router.get(
 
 router.patch(
     '/:publicID/respond',
-    limitRequests(escrowLimits.respond),
+    rateLimit(escrowLimits.respond),
     requireAuth,
     validateRequest(escrowValidator.respond),
     escrowController.respond
@@ -49,7 +49,7 @@ router.patch(
 
 router.patch(
     '/:publicID/release',
-    limitRequests(escrowLimits.payout),
+    rateLimit(escrowLimits.payout),
     requireAuth,
     validateRequest(escrowValidator.release),
     escrowController.release
@@ -57,7 +57,7 @@ router.patch(
 
 router.patch(
     '/:publicID/withdraw',
-    limitRequests(escrowLimits.payout),
+    rateLimit(escrowLimits.payout),
     requireAuth, 
     validateRequest(escrowValidator.withdraw),
     escrowController.withdraw

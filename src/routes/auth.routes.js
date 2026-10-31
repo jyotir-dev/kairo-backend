@@ -15,20 +15,20 @@ const authController = require('../controllers/auth.controller');
 
 // Middlewares
 const requireAuth = require('../middlewares/auth.middleware');
-const limitRequests = require('../middlewares/limiter.middleware');
+const rateLimit = require('../middlewares/ratelimit.middleware');
 const validateRequest = require('../middlewares/validate.middleware');
 
 // Authentication Routes
 router.post(
     '/signup',
-    limitRequests(authLimits.signup),
+    rateLimit(authLimits.signup),
     validateRequest(authValidator.signup),
     authController.signup
 );
 
 router.post(
     '/login',
-    limitRequests(authLimits.login),
+    rateLimit(authLimits.login),
     validateRequest(authValidator.login),
     authController.login
 );
@@ -46,7 +46,7 @@ router.post(
 
 router.patch(
     '/password',
-    limitRequests(authLimits.changePassword),
+    rateLimit(authLimits.changePassword),
     requireAuth,
     validateRequest(authValidator.changePassword),
     authController.changePassword
@@ -54,35 +54,35 @@ router.patch(
 
 router.post(
     '/verify-email',
-    limitRequests(authLimits.token),
+    rateLimit(authLimits.token),
     validateRequest(authValidator.verifyEmail),
     authController.verifyEmail
 );
 
 router.post(
     '/verify-email/resend',
-    limitRequests(authLimits.email),
+    rateLimit(authLimits.email),
     requireAuth,
     authController.resendVerification
 );
 
 router.post(
     '/forgot-password',
-    limitRequests(authLimits.email),
+    rateLimit(authLimits.email),
     validateRequest(authValidator.forgotPassword),
     authController.forgotPassword
 );
 
 router.post(
     '/reset-password',
-    limitRequests(authLimits.token),
+    rateLimit(authLimits.token),
     validateRequest(authValidator.resetPassword),
     authController.resetPassword
 );
 
 router.post(
     '/reset-password/verify',
-    limitRequests(authLimits.token),
+    rateLimit(authLimits.token),
     validateRequest(authValidator.verifyResetToken),
     authController.verifyResetToken
 );
