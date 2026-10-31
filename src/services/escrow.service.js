@@ -21,7 +21,7 @@ const {
 } = require('../errors/http.errors');
 
 // Services
-const walletService = require('../blockchain/wallet');
+const wallet = require('../blockchain/wallet');
 
 // Constants
 const PUBLIC_ID_BYTES = 8;
@@ -29,9 +29,9 @@ const PUBLIC_ID_BYTES = 8;
 // Watch Deposit
 const watchDeposit = (escrow) => {
 
-    const requiredLamports = walletService.toLamports(escrow.amount);
+    const requiredLamports = wallet.toLamports(escrow.amount);
 
-    const subscriptionID = walletService.subscribe(escrow.wallet.publicKey, async (balance) => {
+    const subscriptionID = wallet.subscribe(escrow.wallet.publicKey, async (balance) => {
 
         if (balance < requiredLamports) {
             return;
@@ -45,7 +45,7 @@ const watchDeposit = (escrow) => {
             { $set: { status: ESCROW_STATUS.FUNDED } }
         );
 
-        await walletService.unsubscribe(subscriptionID);
+        await wallet.unsubscribe(subscriptionID);
     });
 };
 
@@ -216,7 +216,7 @@ exports.respond = async (user, params, body) => {
     }
 
     // Accept
-    const wallet = walletService.create();
+    const escrowWallet = wallet.create();
 
     const accepted = await Escrow.findOneAndUpdate(
         {
@@ -226,7 +226,7 @@ exports.respond = async (user, params, body) => {
         {
             $set: {
                 status: ESCROW_STATUS.WAITING_FOR_DEPOSIT,
-                wallet
+                wallet: escrowWallet
             }
         },
         { returnDocument: 'after' }
@@ -328,7 +328,7 @@ exports.withdraw = async (user, params, body) => {
     let signature;
 
     try {
-        signature = await walletService.transfer(claimed.wallet.encryptedPrivateKey, address);
+        signature = await wallet.transfer(claimed.wallet.encryptedPrivateKey, address);
     } catch (error) {
         await Escrow.updateOne(
             {

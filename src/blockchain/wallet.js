@@ -13,7 +13,7 @@ const {
 const encryption = require('../security/encryption');
 
 // Connection
-const connection = new Connection('https://api.mainnet-beta.solana.com', 'confirmed');
+const connection = new Connection(process.env.SOLANA_RPC_URL, 'confirmed');
 
 // To Lamports
 exports.toLamports = (sol) => Math.round(sol * LAMPORTS_PER_SOL);
