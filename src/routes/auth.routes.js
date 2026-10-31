@@ -35,7 +35,7 @@ router.post(
 
 router.get(
     '/me',
-    requireAuth,
+    requireAuth(),
     authController.me
 );
 
@@ -47,7 +47,7 @@ router.post(
 router.patch(
     '/password',
     rateLimit(authLimits.changePassword),
-    requireAuth,
+    requireAuth(),
     validateRequest(authValidator.changePassword),
     authController.changePassword
 );
@@ -62,7 +62,7 @@ router.post(
 router.post(
     '/verify-email/resend',
     rateLimit(authLimits.email),
-    requireAuth,
+    requireAuth(),
     authController.resendVerification
 );
 

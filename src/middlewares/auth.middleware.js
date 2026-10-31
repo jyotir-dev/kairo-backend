@@ -8,32 +8,33 @@ const User = require('../models/user.model');
 const { UnauthorizedError } = require('../errors/http.errors');
 
 // Auth Middleware
-module.exports = async (req, res, next) => {
-
-    try {
-        const token = req.cookies?.token;
-
-        if (!token) {
-            throw new UnauthorizedError('Authentication required.', 'AUTH_REQUIRED');
-        }
-
-        let decoded;
-
+module.exports = () => {
+    return async (req, res, next) => {
         try {
-            decoded = JWT.verifyToken(token);
-        } catch {
-            throw new UnauthorizedError('Invalid or expired authentication token.', 'INVALID_TOKEN');
+            const token = req.cookies?.token;
+
+            if (!token) {
+                throw new UnauthorizedError('Authentication required.', 'AUTH_REQUIRED');
+            }
+
+            let decoded;
+
+            try {
+                decoded = JWT.verifyToken(token);
+            } catch {
+                throw new UnauthorizedError('Invalid or expired authentication token.', 'INVALID_TOKEN');
+            }
+
+            const user = await User.findById(decoded.id);
+
+            if (!user || user.tokenVersion !== decoded.version) {
+                throw new UnauthorizedError('Your session has expired. Please log in again.', 'SESSION_EXPIRED');
+            }
+
+            req.user = user;
+            next();
+        } catch (error) {
+            next(error);
         }
-
-        const user = await User.findById(decoded.id);
-
-        if (!user || user.tokenVersion !== decoded.version) {
-            throw new UnauthorizedError('Your session has expired. Please log in again.', 'SESSION_EXPIRED');
-        }
-
-        req.user = user;
-        next();
-    } catch (error) {
-        next(error);
-    }
-};
+    };
+}
