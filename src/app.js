@@ -38,7 +38,7 @@ app.use(cors({
 }));
 
 // Logger Middleware
-app.use(loggerMiddleware);
+app.use(loggerMiddleware());
 
 // Health
 app.use('/api/health', healthRoutes);
@@ -48,10 +48,10 @@ app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/escrow', escrowRoutes);
 
 // Fallback Middleware
-app.use(fallbackMiddleware);
+app.use(fallbackMiddleware());
 
 // Global Error Middleware
-app.use(errorMiddleware);
+app.use(errorMiddleware());
 
 // Export Express Application
 module.exports = app;
