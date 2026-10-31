@@ -16,7 +16,7 @@ const escrowController = require('../controllers/escrow.controller');
 // Middlewares
 const requireAuth = require('../middlewares/auth.middleware');
 const rateLimit = require('../middlewares/ratelimit.middleware');
-const validateRequest = require('../middlewares/validate.middleware');
+const validateRequest = require('../middlewares/validation.middleware');
 
 // Escrow Routes
 router.post(
