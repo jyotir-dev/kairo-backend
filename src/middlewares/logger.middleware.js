@@ -18,10 +18,9 @@ function getStatusColor(status) {
     return COLORS.magenta;
 }
 
-// Logger Middleware
-module.exports = () => {
-    return (req, res, next) => {
-
+// Log Request
+function logRequest() {
+    return function logRequest(req, res, next) {
         const start = process.hrtime.bigint();
 
         res.on('finish', () => {
@@ -39,4 +38,7 @@ module.exports = () => {
 
         next();
     };
-};
+}
+
+// Export Middleware
+module.exports = logRequest;

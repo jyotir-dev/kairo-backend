@@ -1,9 +1,9 @@
 const ApiError = require('../errors/api.error');
 
-// Error Middleware
-module.exports = () => {
-    return (error, req, res, next) => {
-
+// Handle Error
+function handleError() {
+    return function handleError(error, req, res, next) {
+        
         if (res.headersSent) {
             return next(error);
         }
@@ -24,4 +24,7 @@ module.exports = () => {
             message: 'Internal server error.'
         });
     };
-};
+}
+
+// Export Middleware
+module.exports = handleError;

@@ -7,10 +7,11 @@ const User = require('../models/user.model');
 // Errors
 const { UnauthorizedError } = require('../errors/http.errors');
 
-// Auth Middleware
-module.exports = () => {
-    return async (req, res, next) => {
+// Require Auth
+function requireAuth() {
+    return async function requireAuth(req, res, next) {
         try {
+            
             const token = req.cookies?.token;
 
             if (!token) {
@@ -37,4 +38,7 @@ module.exports = () => {
             next(error);
         }
     };
-};
+}
+
+// Export Middleware
+module.exports = requireAuth;

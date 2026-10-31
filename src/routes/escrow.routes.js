@@ -28,7 +28,7 @@ router.post(
 );
 
 router.get('/escrows',
-    requireAuth(), 
+    requireAuth(),
     escrowController.escrows
 );
 
