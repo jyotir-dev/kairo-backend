@@ -20,7 +20,7 @@ const {
     ConflictError
 } = require('../errors/http.errors');
 
-// Services
+// Blockchain
 const wallet = require('../blockchain/wallet');
 
 // Constants

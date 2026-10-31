@@ -1,15 +1,26 @@
 {
-  "name": "backend",
+  "name": "kairo-backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "private": true,
+  "description": "Kairo API: peer-to-peer escrow on Solana, built with Express 5 and MongoDB.",
+  "main": "src/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "kairo",
+    "escrow",
+    "solana",
+    "express",
+    "mongodb"
+  ],
+  "author": "jyotir-dev",
+  "license": "UNLICENSED",
   "type": "commonjs",
+  "engines": {
+    "node": ">=22"
+  },
   "dependencies": {
     "@solana/web3.js": "^1.99.0",
     "bcrypt": "^6.0.0",
