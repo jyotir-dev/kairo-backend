@@ -1,6 +1,20 @@
 // Errors
 const ApiError = require('../errors/api.error');
 
+// Body Errors
+const BODY_ERRORS = {
+    'entity.parse.failed': {
+        statusCode: 400,
+        code: 'INVALID_JSON',
+        message: 'Request body must be valid JSON.'
+    },
+    'entity.too.large': {
+        statusCode: 413,
+        code: 'PAYLOAD_TOO_LARGE',
+        message: 'Request body is too large.'
+    }
+};
+
 // Handle Error
 function handleError() {
     return function handleError(error, req, res, next) {
@@ -14,6 +28,16 @@ function handleError() {
                 success: false,
                 code: error.code,
                 message: error.message
+            });
+        }
+
+        const bodyError = BODY_ERRORS[error.type];
+
+        if (bodyError) {
+            return res.status(bodyError.statusCode).json({
+                success: false,
+                code: bodyError.code,
+                message: bodyError.message
             });
         }
 
