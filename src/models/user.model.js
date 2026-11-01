@@ -1,6 +1,9 @@
 // Dependencies
 const mongoose = require('mongoose');
 
+// Enums
+const { USER_ROLE } = require('../enums/user.enums');
+
 // User Schema
 const userSchema = new mongoose.Schema({
 
@@ -29,6 +32,11 @@ const userSchema = new mongoose.Schema({
     emailVerified: {
         type: Boolean,
         default: false
+    },
+
+    role: {
+        type: String,
+        default: USER_ROLE.USER
     },
 
     // Token Version
