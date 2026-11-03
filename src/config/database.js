@@ -1,10 +1,17 @@
+/** @import { ConnectOptions } from 'mongoose' */
+
 // Dependencies
 const mongoose = require('mongoose');
 
 // Log
 const log = require('../lib/log');
 
-// Connection Options
+/**
+ * Connection Options
+ * Gives up on an unreachable MongoDB after 10 seconds instead of the driver's default 30, and names the app in MongoDB's server logs.
+ *
+ * @type {ConnectOptions}
+ */
 const CONNECTION_OPTIONS = {
     appName: 'kairo',
     serverSelectionTimeoutMS: 10000
@@ -17,7 +24,13 @@ mongoose.set('strictQuery', true);
 mongoose.connection.on('disconnected', () => log.warn('DATABASE', 'Disconnected from MongoDB.'));
 mongoose.connection.on('reconnected', () => log.success('DATABASE', 'Reconnected to MongoDB.'));
 
-// Connect Database
+/**
+ * Connect Database
+ * Connects to MongoDB at `MONGO_URI` and logs how long it took. Logs and rethrows on failure, so the caller decides whether to exit.
+ *
+ * @returns {Promise<void>} Resolves once connected.
+ * @throws {Error} If MongoDB can't be reached within the connection timeout.
+ */
 module.exports = async () => {
 
     const start = Date.now();
